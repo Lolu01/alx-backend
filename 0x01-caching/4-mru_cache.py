@@ -21,13 +21,14 @@ class MRUCache(BaseCaching):
         self.cache_data.move_to_end(key)
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            last_key = next(reversed(self.cache_data))
-            del self.cache_data[last_key]
-            print("DISCARD: {}".format(last_key))
+            mru_key = next(reversed(self.cache_data))
+            del self.cache_data[mru_key]
+            print("DISCARD: {}".format(mru_key))
 
     def get(self, key):
         """ Get an item by key"""
         if key is None or key not in self.cache_data:
             return None
+
         self.cache_data.move_to_end(key)
         return self.cache_data[key]
